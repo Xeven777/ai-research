@@ -49,9 +49,9 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
 
   return (
     <div className="animate-fade-in">
-      <Card className="w-full mx-auto bg-white border border-gray-200 shadow-sm overflow-hidden">
-        <CardHeader className="border-b border-gray-100 bg-white">
-          <CardTitle className="font-serif text-2xl font-bold text-gray-900">
+      <Card className="w-full mx-auto overflow-hidden">
+        <CardHeader className="border-b border-border">
+          <CardTitle className=" text-2xl font-bold ">
             Research Parameters
           </CardTitle>
           <p className="text-muted-foreground text-sm mt-1">
@@ -59,11 +59,11 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
           </p>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="pt-6 space-y-6">
+          <CardContent className="py-6 space-y-6">
             <div>
               <div className="flex items-center mb-2">
-                <FileTextIcon className="mr-2 h-5 w-5 text-gray-700" />
-                <Label htmlFor="topic" className="font-medium text-gray-900">
+                <FileTextIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+                <Label htmlFor="topic" className="font-medium ">
                   Research Topic
                 </Label>
               </div>
@@ -72,21 +72,17 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                 placeholder="Enter your research topic"
                 value={mainTopic}
                 onChange={(e) => setMainTopic(e.target.value)}
-                className="h-11 border-gray-300 focus:border-primary"
                 required
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Provide a clear and specific research topic.
               </p>
             </div>
 
             <div>
               <div className="flex items-center mb-2">
-                <FileText className="mr-2 h-5 w-5 text-gray-700" />
-                <Label
-                  htmlFor="description"
-                  className="font-medium text-gray-900"
-                >
+                <FileText className="mr-2 h-5 w-5 text-muted-foreground" />
+                <Label htmlFor="description" className="font-medium ">
                   Topic Description
                 </Label>
               </div>
@@ -95,9 +91,9 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                 placeholder="Provide additional details about your research topic"
                 value={topicDescription}
                 onChange={(e) => setTopicDescription(e.target.value)}
-                className="min-h-[120px] border-gray-300 focus:border-primary"
+                rows={5}
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Include any specific aspects you want to focus on in your
                 research.
               </p>
@@ -105,17 +101,14 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <Label
-                  htmlFor="length"
-                  className="font-medium text-gray-900 block mb-2"
-                >
+                <Label htmlFor="length" className="font-medium  block mb-2">
                   Document Length
                 </Label>
                 <Select
                   value={documentLength.toString()}
                   onValueChange={(value) => setDocumentLength(parseInt(value))}
                 >
-                  <SelectTrigger id="length" className="h-11 border-gray-300">
+                  <SelectTrigger id="length">
                     <SelectValue placeholder="Select length" />
                   </SelectTrigger>
                   <SelectContent>
@@ -125,23 +118,20 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                     <SelectItem value="25">Extended (25+ pages)</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Approximate length of your document.
                 </p>
               </div>
 
               <div>
-                <Label
-                  htmlFor="citation"
-                  className="font-medium text-gray-900 block mb-2"
-                >
+                <Label htmlFor="citation" className="font-medium  block mb-2">
                   Citation Format
                 </Label>
                 <Select
                   value={citationFormat}
                   onValueChange={setCitationFormat}
                 >
-                  <SelectTrigger id="citation" className="h-11 border-gray-300">
+                  <SelectTrigger id="citation">
                     <SelectValue placeholder="Select format" />
                   </SelectTrigger>
                   <SelectContent>
@@ -151,20 +141,17 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                     <SelectItem value="Harvard">Harvard</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   The citation style for your document.
                 </p>
               </div>
 
               <div>
-                <Label
-                  htmlFor="level"
-                  className="font-medium text-gray-900 block mb-2"
-                >
+                <Label htmlFor="level" className="font-medium  block mb-2">
                   Academic Level
                 </Label>
                 <Select value={academicLevel} onValueChange={setAcademicLevel}>
-                  <SelectTrigger id="level" className="h-11 border-gray-300">
+                  <SelectTrigger id="level">
                     <SelectValue placeholder="Select level" />
                   </SelectTrigger>
                   <SelectContent>
@@ -174,19 +161,14 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                     <SelectItem value="Doctoral">Doctoral</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   The academic level of your research.
                 </p>
               </div>
             </div>
           </CardContent>
-          <CardFooter className="border-t border-gray-100 bg-gray-50 flex justify-end">
-            <Button
-              type="submit"
-              size="lg"
-              disabled={!mainTopic.trim()}
-              className="px-8 py-2.5 text-base font-medium bg-gray-900 text-white hover:bg-gray-800 rounded-lg transition-colors flex items-center gap-2"
-            >
+          <CardFooter className="border-t border-border flex pt-6 justify-end">
+            <Button type="submit" size="lg" disabled={!mainTopic.trim()}>
               Generate Outline
               <ArrowRightIcon size={16} />
             </Button>

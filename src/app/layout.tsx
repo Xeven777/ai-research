@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Source_Serif_4 } from "next/font/google";
+import { Lora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import ThemeTogglebutton from "@/components/ui/ThemeToggle";
 
-const font = Source_Serif_4({ subsets: ["latin"] });
+const font = Lora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nextjs + Shadcn",

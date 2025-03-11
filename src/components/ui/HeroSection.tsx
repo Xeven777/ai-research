@@ -53,17 +53,17 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="py-6 px-6 md:px-8 shadow-sm border-b">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
+      <header className="py-6 px-6 md:px-8 shadow-sm border-b border-border">
         <div className="container mx-auto">
-          <h1 className="text-3xl font-serif font-bold">ResearchDocs</h1>
+          <h1 className="text-3xl  font-bold">ResearchDocs</h1>
         </div>
       </header>
 
       <main className="flex-1 py-12 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-serif font-bold mb-2">
+            <h2 className="text-3xl  font-bold mb-2">
               Research Document Generator
             </h2>
             <p className="text-muted-foreground">
@@ -73,16 +73,16 @@ const Index = () => {
           </div>
 
           {/* Workflow Steps */}
-          <div className="rounded-lg border p-6 mb-8 shadow-sm">
+          <div className="rounded-lg border p-6 mb-8 shadow-sm bg-card text-card-foreground">
             <div className="flex justify-between items-center relative">
               {workflow.map((item, index) => (
                 <div key={index} className="flex flex-col items-center z-10">
                   <div
                     className={`w-12 h-12 rounded-full flex items-center justify-center ${
                       index + 1 === step
-                        ? "bg-primary"
+                        ? "bg-primary text-primary-foreground"
                         : index + 1 < step
-                        ? "bg-[#F6F1CE] text-primary"
+                        ? "bg-secondary text-secondary-foreground"
                         : "bg-muted text-muted-foreground"
                     }`}
                   >

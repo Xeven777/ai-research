@@ -23,7 +23,11 @@ import {
 import { cn } from "@/lib/utils";
 
 // Function to generate content based on topics
-const generateContent = (mainTopic: string, sectionTitle: string, subtopicTitle: string): string => {
+const generateContent = (
+  mainTopic: string,
+  sectionTitle: string,
+  subtopicTitle: string
+): string => {
   return `This is generated content for "${subtopicTitle}" within the section "${sectionTitle}" of the main topic "${mainTopic}".
 
 This paragraph provides detailed information about ${subtopicTitle}. It includes relevant facts, examples, and explanations that would be valuable for the reader.
@@ -164,13 +168,11 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
 
   return (
     <div className="animate-fade-in">
-      <Card className="w-full max-w-4xl mx-auto bg-paper border-0 shadow-md overflow-hidden transition-all duration-400">
-        <CardHeader className="bg-primary/5 border-b border-primary/10">
+      <Card className="w-full max-w-4xl mx-auto overflow-hidden">
+        <CardHeader className="border-b">
           <div className="flex justify-between items-start">
             <div>
-              <CardTitle className="font-serif text-2xl">
-                Generate Content
-              </CardTitle>
+              <CardTitle className="text-2xl">Generate Content</CardTitle>
               <CardDescription>
                 {allContentGenerated
                   ? "All content has been generated"
@@ -182,9 +184,7 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
               disabled={generatingContent || allContentGenerated}
               className={cn(
                 "transition-all duration-400",
-                allContentGenerated
-                  ? "bg-green-600 hover:bg-green-700"
-                  : "bg-primary hover:bg-primary/90"
+                allContentGenerated ? "bg-green-600 hover:bg-green-700" : ""
               )}
             >
               {generatingContent ? (
@@ -243,7 +243,7 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
                         .map((subtopic, subtopicIndex) => (
                           <div key={subtopic.id} className="space-y-3">
                             <div className="flex justify-between items-center">
-                              <h3 className="font-serif text-lg font-medium">
+                              <h3 className=" text-lg font-medium">
                                 {subtopicIndex + 1}. {subtopic.title}
                               </h3>
                               <Button
@@ -284,7 +284,7 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
           </Tabs>
         </CardContent>
 
-        <CardFooter className="border-t border-primary/10 bg-primary/5 mt-4 flex justify-between">
+        <CardFooter className="border-t pt-6 mt-4 flex justify-between">
           <Button
             variant="outline"
             onClick={onBack}
@@ -296,7 +296,7 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
           <Button
             onClick={onNext}
             disabled={!allContentGenerated}
-            className="px-6 flex items-center gap-2 bg-primary hover:bg-primary/90"
+            className="px-6 flex items-center gap-2"
           >
             Preview <ArrowRight size={16} />
           </Button>
