@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google";
+import { Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import ThemeTogglebutton from "@/components/ui/ThemeToggle";
 
-const font = Bricolage_Grotesque({ subsets: ["latin"] });
+const font = Source_Serif_4({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Nextjs + Shadcn",
