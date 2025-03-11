@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Topic } from '@/utils/documentUtils';
+import { Topic } from '@/lib/utils';
 import { FileText, FileTextIcon, ArrowRightIcon } from 'lucide-react';
 
 interface TopicFormProps {

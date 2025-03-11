@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import TopicForm from "@/components/TopicForm";
 import OutlineGenerator from "@/components/OutlineGenerator";
