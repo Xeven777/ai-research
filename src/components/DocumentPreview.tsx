@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { DocumentOutline, Topic, exportDocument } from '@/utils/documentUtils';
+import { DocumentOutline, Topic, exportDocument } from '@/lib/utils';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, FileDown, FileText, FileBox } from 'lucide-react';
