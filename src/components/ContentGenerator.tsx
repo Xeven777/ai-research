@@ -367,8 +367,8 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
                               ) : (
                                 <div className="text-muted-foreground italic flex flex-col items-center justify-center h-[150px]">
                                   <FileText className="mb-2 opacity-50" />
-                                  Click "Generate" to create content for this
-                                  subtopic
+                                  Click &quot;Generate&quot; to create content
+                                  for this subtopic
                                 </div>
                               )}
                             </div>
