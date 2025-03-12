@@ -42,6 +42,11 @@ const Index = () => {
     setStep(newStep);
   };
 
+  const handleGenerateProgress = (progress: number) => {
+    // Track generation progress for potential UI indicators
+    console.log(`Content generation progress: ${progress}%`);
+  };
+
   const variants = {
     enter: (direction: number) => ({
       x: direction > 0 ? 20 : -20,
@@ -184,9 +189,11 @@ const Index = () => {
               >
                 <ContentGenerator
                   outline={documentOutline}
+                  topicInfo={topicInfo}
                   onOutlineUpdate={handleOutlineUpdate}
                   onBack={() => goToStep(2)}
                   onNext={() => goToStep(4)}
+                  onProgressUpdate={handleGenerateProgress}
                 />
               </motion.div>
             )}

@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DocumentOutline } from "@/lib/utils";
+import { DocumentOutline, Topic } from "@/lib/types";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,38 +19,36 @@ import {
   FileText,
   RefreshCw,
   Check,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const generateContent = (
-  mainTopic: string,
-  sectionTitle: string,
-  subtopicTitle: string
-): string => {
-  return `This is generated content for "${subtopicTitle}" within the section "${sectionTitle}" of the main topic "${mainTopic}".
-
-This paragraph provides detailed information about ${subtopicTitle}. It includes relevant facts, examples, and explanations that would be valuable for the reader.
-
-In conclusion, ${subtopicTitle} is an important aspect to consider when discussing ${mainTopic} and specifically the ${sectionTitle} section.`;
-};
+import { generateAIContent } from "@/lib/actions/content";
+import { Skeleton } from "@/components/ui/skeleton";
+import { toast } from "sonner";
 
 interface ContentGeneratorProps {
   outline: DocumentOutline;
+  topicInfo: Topic;
   onOutlineUpdate: (outline: DocumentOutline) => void;
+  onProgressUpdate?: (progress: number) => void;
   onBack: () => void;
   onNext: () => void;
 }
 
 const ContentGenerator: React.FC<ContentGeneratorProps> = ({
   outline,
+  topicInfo,
   onOutlineUpdate,
+  onProgressUpdate,
   onBack,
   onNext,
 }) => {
   const [activeTab, setActiveTab] = useState<string>("");
-  const [generatingContent, setGeneratingContent] = useState(false);
-  const [progressPercentage, setProgressPercentage] = useState(0);
   const [localOutline, setLocalOutline] = useState<DocumentOutline>(outline);
+  const [generatingMap, setGeneratingMap] = useState<Record<string, boolean>>(
+    {}
+  );
+  const [progressPercentage, setProgressPercentage] = useState(0);
 
   // Count selected subtopics
   const selectedSubtopics = outline.sections
@@ -79,89 +77,161 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
 
     // Calculate progress
     if (totalSubtopics > 0) {
-      setProgressPercentage((subtopicsWithContent / totalSubtopics) * 100);
-    }
-  }, [outline, activeTab, totalSubtopics, subtopicsWithContent]);
-
-  const generateAllContent = async () => {
-    setGeneratingContent(true);
-
-    let updatedOutline = { ...localOutline };
-    let completedCount = 0;
-
-    // Process each section and subtopic
-    for (const section of updatedOutline.sections) {
-      if (!section.isSelected) continue;
-
-      for (const subtopic of section.subtopics) {
-        if (!subtopic.isSelected) continue;
-
-        // Simulate generation delay
-        await new Promise((resolve) => setTimeout(resolve, 300));
-
-        // Generate content for this subtopic
-        const content = generateContent(
-          updatedOutline.mainTopic,
-          section.title,
-          subtopic.title
-        );
-
-        // Update this specific subtopic with new content
-        updatedOutline = {
-          ...updatedOutline,
-          sections: updatedOutline.sections.map((s) =>
-            s.id === section.id
-              ? {
-                  ...s,
-                  subtopics: s.subtopics.map((st) =>
-                    st.id === subtopic.id ? { ...st, content } : st
-                  ),
-                }
-              : s
-          ),
-        };
-
-        // Update state and progress
-        completedCount++;
-        setProgressPercentage((completedCount / totalSubtopics) * 100);
-        setLocalOutline(updatedOutline);
-        onOutlineUpdate(updatedOutline);
+      const newProgress = Math.round(
+        (subtopicsWithContent / totalSubtopics) * 100
+      );
+      setProgressPercentage(newProgress);
+      if (onProgressUpdate) {
+        onProgressUpdate(newProgress);
       }
     }
+  }, [
+    outline,
+    activeTab,
+    totalSubtopics,
+    subtopicsWithContent,
+    onProgressUpdate,
+  ]);
 
-    setGeneratingContent(false);
-  };
-
-  const regenerateSubtopicContent = (sectionId: string, subtopicId: string) => {
+  const generateSubtopicContent = async (
+    sectionId: string,
+    subtopicId: string
+  ) => {
     const section = localOutline.sections.find((s) => s.id === sectionId);
     const subtopic = section?.subtopics.find((st) => st.id === subtopicId);
 
     if (!section || !subtopic) return;
 
-    const content = generateContent(
-      localOutline.mainTopic,
-      section.title,
-      subtopic.title
-    );
+    // Set loading state for this specific subtopic
+    setGeneratingMap((prev) => ({
+      ...prev,
+      [`${sectionId}-${subtopicId}`]: true,
+    }));
 
-    const updatedOutline = {
-      ...localOutline,
-      sections: localOutline.sections.map((s) =>
-        s.id === sectionId
-          ? {
-              ...s,
-              subtopics: s.subtopics.map((st) =>
-                st.id === subtopicId ? { ...st, content } : st
-              ),
-            }
-          : s
-      ),
-    };
+    try {
+      // Generate content using AI
+      const content = await generateAIContent(
+        localOutline.mainTopic,
+        section.title,
+        subtopic.title,
+        topicInfo.academicLevel || "undergraduate"
+      );
 
-    setLocalOutline(updatedOutline);
-    onOutlineUpdate(updatedOutline);
+      // Update outline with the new content
+      const updatedOutline = {
+        ...localOutline,
+        sections: localOutline.sections.map((s) =>
+          s.id === sectionId
+            ? {
+                ...s,
+                subtopics: s.subtopics.map((st) =>
+                  st.id === subtopicId ? { ...st, content } : st
+                ),
+              }
+            : s
+        ),
+      };
+
+      setLocalOutline(updatedOutline);
+      onOutlineUpdate(updatedOutline);
+
+      toast.success(`Generated content for "${subtopic.title}"`);
+    } catch (error) {
+      console.error("Error generating content:", error);
+      toast.error("Failed to generate content. Please try again.");
+    } finally {
+      // Clear loading state
+      setGeneratingMap((prev) => ({
+        ...prev,
+        [`${sectionId}-${subtopicId}`]: false,
+      }));
+    }
   };
 
+  const generateAllContent = async () => {
+    // Get all selected sections and subtopics
+    const sectionsToProcess = localOutline.sections.filter(
+      (section) => section.isSelected
+    );
+
+    let completedCount = 0;
+    let updatedOutline = { ...localOutline };
+
+    for (const section of sectionsToProcess) {
+      // Filter to only selected subtopics
+      const subtopicsToProcess = section.subtopics.filter(
+        (subtopic) => subtopic.isSelected && !subtopic.content
+      );
+
+      // Update active tab to current section being processed
+      if (subtopicsToProcess.length > 0) {
+        setActiveTab(section.id);
+      }
+
+      for (const subtopic of subtopicsToProcess) {
+        // Mark this subtopic as generating
+        setGeneratingMap((prev) => ({
+          ...prev,
+          [`${section.id}-${subtopic.id}`]: true,
+        }));
+
+        try {
+          // Generate content for this subtopic
+          const content = await generateAIContent(
+            localOutline.mainTopic,
+            section.title,
+            subtopic.title,
+            topicInfo.academicLevel || "undergraduate"
+          );
+
+          // Update the outline with new content
+          updatedOutline = {
+            ...updatedOutline,
+            sections: updatedOutline.sections.map((s) =>
+              s.id === section.id
+                ? {
+                    ...s,
+                    subtopics: s.subtopics.map((st) =>
+                      st.id === subtopic.id ? { ...st, content } : st
+                    ),
+                  }
+                : s
+            ),
+          };
+
+          // Update state with the latest content
+          setLocalOutline(updatedOutline);
+          onOutlineUpdate(updatedOutline);
+
+          // Update progress
+          completedCount++;
+          const progress = Math.round(
+            ((subtopicsWithContent + completedCount) / totalSubtopics) * 100
+          );
+          setProgressPercentage(progress);
+          if (onProgressUpdate) {
+            onProgressUpdate(progress);
+          }
+        } catch (error) {
+          console.error(
+            `Error generating content for ${subtopic.title}:`,
+            error
+          );
+          toast.error(`Failed to generate content for "${subtopic.title}"`);
+        } finally {
+          // Clear loading state for this subtopic
+          setGeneratingMap((prev) => ({
+            ...prev,
+            [`${section.id}-${subtopic.id}`]: false,
+          }));
+        }
+      }
+    }
+
+    toast.success("Content generation complete!");
+  };
+
+  const isGenerating = Object.values(generatingMap).some(Boolean);
   const allContentGenerated =
     subtopicsWithContent === totalSubtopics && totalSubtopics > 0;
 
@@ -180,13 +250,13 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
             </div>
             <Button
               onClick={generateAllContent}
-              disabled={generatingContent || allContentGenerated}
+              disabled={isGenerating || allContentGenerated}
               className={cn(
                 "transition-all duration-400",
                 allContentGenerated ? "bg-green-600 hover:bg-green-700" : ""
               )}
             >
-              {generatingContent ? (
+              {isGenerating ? (
                 <>
                   <RefreshCw size={16} className="mr-2 animate-spin" />
                   Generating...
@@ -242,35 +312,63 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
                         .map((subtopic, subtopicIndex) => (
                           <div key={subtopic.id} className="space-y-3">
                             <div className="flex justify-between items-center">
-                              <h3 className=" text-lg font-medium">
+                              <h3 className="text-lg font-medium">
                                 {subtopicIndex + 1}. {subtopic.title}
                               </h3>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() =>
-                                  regenerateSubtopicContent(
-                                    section.id,
-                                    subtopic.id
-                                  )
-                                }
-                                className="h-8"
-                              >
-                                <RefreshCw size={14} className="mr-1" />
-                                Regenerate
-                              </Button>
+                              {!generatingMap[
+                                `${section.id}-${subtopic.id}`
+                              ] && (
+                                <Button
+                                  variant={
+                                    subtopic.content ? "outline" : "default"
+                                  }
+                                  size="sm"
+                                  onClick={() =>
+                                    generateSubtopicContent(
+                                      section.id,
+                                      subtopic.id
+                                    )
+                                  }
+                                  className="h-8"
+                                  disabled={isGenerating}
+                                >
+                                  {subtopic.content ? (
+                                    <>
+                                      <RefreshCw size={14} className="mr-1" />
+                                      Regenerate
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Sparkles size={14} className="mr-1" />
+                                      Generate
+                                    </>
+                                  )}
+                                </Button>
+                              )}
                             </div>
                             <Separator />
                             <div className="pl-3 paper-content min-h-[150px]">
-                              {subtopic.content ? (
+                              {generatingMap[`${section.id}-${subtopic.id}`] ? (
+                                <div className="space-y-3">
+                                  <Skeleton className="w-full h-4" />
+                                  <Skeleton className="w-[90%] h-4" />
+                                  <Skeleton className="w-[95%] h-4" />
+                                  <Skeleton className="w-[85%] h-4" />
+                                  <Skeleton className="w-full h-4" />
+                                </div>
+                              ) : subtopic.content ? (
                                 subtopic.content
                                   .split("\n\n")
                                   .map((paragraph, i) => (
-                                    <p key={i}>{paragraph}</p>
+                                    <p key={i} className="mb-3">
+                                      {paragraph}
+                                    </p>
                                   ))
                               ) : (
-                                <div className="text-muted-foreground italic">
-                                  Content will appear here after generation
+                                <div className="text-muted-foreground italic flex flex-col items-center justify-center h-[150px]">
+                                  <FileText className="mb-2 opacity-50" />
+                                  Click "Generate" to create content for this
+                                  subtopic
                                 </div>
                               )}
                             </div>
