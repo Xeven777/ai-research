@@ -3,37 +3,11 @@ import { twMerge } from "tailwind-merge";
 import { jsPDF } from "jspdf";
 import { saveAs } from "file-saver";
 import { toast } from "sonner";
+import { Document, Packer, Paragraph, HeadingLevel, TextRun } from "docx";
+import { DocumentOutline, Section } from "./types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
-}
-
-export interface Topic {
-  mainTopic: string;
-  documentLength: number;
-  outputFormat: "DOCX" | "PDF";
-  topicDescription?: string;
-  citationFormat?: string;
-  academicLevel?: string;
-}
-
-export interface SubTopic {
-  id: string;
-  title: string;
-  isSelected: boolean;
-  content: string;
-}
-
-export interface Section {
-  id: string;
-  title: string;
-  isSelected: boolean;
-  subtopics: SubTopic[];
-}
-
-export interface DocumentOutline {
-  mainTopic: string;
-  sections: Section[];
 }
 
 // Functions
@@ -215,7 +189,6 @@ export const exportDocument = (
       doc.setFontSize(12);
       outline.sections.forEach((section, sectionIndex) => {
         if (section.isSelected) {
-          // Section title
           yPosition += 10;
           doc.setFont("helvetica", "bold");
           doc.text(`${sectionIndex + 1}. ${section.title}`, 20, yPosition);
@@ -258,29 +231,163 @@ export const exportDocument = (
       doc.save(`${outline.mainTopic.replace(/\s+/g, "_")}.pdf`);
       toast.success("Your document has been downloaded as a PDF.");
     } else if (format === "DOCX") {
-      // For DOCX we'll use a simple text export as a placeholder
-      let content = `# ${outline.mainTopic}\n\n`;
+      // Filter selected sections and subtopics
+      const selectedSections = outline.sections
+        .filter((section) => section.isSelected)
+        .map((section) => ({
+          ...section,
+          subtopics: section.subtopics.filter(
+            (subtopic) => subtopic.isSelected
+          ),
+        }));
 
-      outline.sections.forEach((section, sectionIndex) => {
-        if (section.isSelected) {
-          content += `## ${sectionIndex + 1}. ${section.title}\n\n`;
+      // Create a proper DOCX document
+      const doc = new Document({
+        sections: [
+          {
+            properties: {},
+            children: [
+              // Title page
+              new Paragraph({
+                text: outline.mainTopic,
+                heading: HeadingLevel.TITLE,
+                alignment: "center",
+                spacing: { before: 3000, after: 400 },
+              }),
+              new Paragraph({
+                text: "Research Document",
+                alignment: "center",
+                spacing: { after: 200 },
+              }),
+              new Paragraph({
+                text: "Generated with Research Document Generator",
+                alignment: "center",
+              }),
+              new Paragraph({
+                text: new Date().toLocaleDateString(),
+                alignment: "center",
+                spacing: { before: 400 },
+              }),
+              new Paragraph({
+                text: "",
+                thematicBreak: true,
+              }),
 
-          section.subtopics.forEach((subtopic, subtopicIndex) => {
-            if (subtopic.isSelected) {
-              content += `### ${sectionIndex + 1}.${subtopicIndex + 1}. ${
-                subtopic.title
-              }\n\n`;
-              content += `${subtopic.content}\n\n`;
-            }
-          });
-        }
+              // Table of Contents page
+              new Paragraph({
+                text: "Table of Contents",
+                heading: HeadingLevel.HEADING_1,
+                spacing: { before: 500, after: 300 },
+              }),
+
+              // Generate TOC entries
+              ...selectedSections.flatMap((section, sectionIndex) => {
+                const tocEntries = [];
+
+                // Section entry
+                tocEntries.push(
+                  new Paragraph({
+                    text: `${sectionIndex + 1}. ${section.title}`,
+                    spacing: { before: 200, after: 80 },
+                    tabStops: [
+                      {
+                        type: "right",
+                        position: 5600,
+                      },
+                    ],
+                    children: [
+                      new TextRun({
+                        text: `${sectionIndex + 1}. ${section.title}`,
+                      }),
+                      new TextRun({
+                        text: `\t${sectionIndex + 1}`,
+                        bold: false,
+                      }),
+                    ],
+                  })
+                );
+
+                // Subtopic entries
+                section.subtopics.forEach((subtopic, subtopicIndex) => {
+                  tocEntries.push(
+                    new Paragraph({
+                      text: `${sectionIndex + 1}.${subtopicIndex + 1}. ${
+                        subtopic.title
+                      }`,
+                      indent: { left: 400 },
+                      spacing: { after: 80 },
+                      tabStops: [
+                        {
+                          type: "right",
+                          position: 5600,
+                        },
+                      ],
+                      children: [
+                        new TextRun({
+                          text: `${sectionIndex + 1}.${subtopicIndex + 1}. ${
+                            subtopic.title
+                          }`,
+                        }),
+                        new TextRun({
+                          text: `\t${sectionIndex + 1}`,
+                          bold: false,
+                        }),
+                      ],
+                    })
+                  );
+                });
+
+                return tocEntries;
+              }),
+
+              new Paragraph({
+                text: "",
+                thematicBreak: true,
+              }),
+
+              // Document content
+              ...selectedSections.flatMap((section, sectionIndex) => {
+                const sectionContent = [
+                  new Paragraph({
+                    text: `${sectionIndex + 1}. ${section.title}`,
+                    heading: HeadingLevel.HEADING_1,
+                    spacing: { before: 400, after: 200 },
+                    pageBreakBefore: sectionIndex > 0,
+                  }),
+                ];
+
+                section.subtopics.forEach((subtopic, subtopicIndex) => {
+                  sectionContent.push(
+                    new Paragraph({
+                      text: `${sectionIndex + 1}.${subtopicIndex + 1}. ${
+                        subtopic.title
+                      }`,
+                      heading: HeadingLevel.HEADING_2,
+                      spacing: { before: 300, after: 120 },
+                    }),
+                    // Split the content into paragraphs for better formatting
+                    ...subtopic.content.split("\n\n").map(
+                      (paragraph) =>
+                        new Paragraph({
+                          text: paragraph,
+                          spacing: { after: 120 },
+                        })
+                    )
+                  );
+                });
+
+                return sectionContent;
+              }),
+            ],
+          },
+        ],
       });
 
-      // Create a blob and download it
-      const blob = new Blob([content], { type: "text/plain" });
-      saveAs(blob, `${outline.mainTopic.replace(/\s+/g, "_")}.docx`);
-
-      toast.success("Your document has been downloaded as a DOCX file.");
+      // Generate and save the DOCX file
+      Packer.toBlob(doc).then((blob) => {
+        saveAs(blob, `${outline.mainTopic.replace(/\s+/g, "_")}.docx`);
+        toast.success("Your document has been downloaded as a DOCX file.");
+      });
     }
   } catch (error) {
     console.error("Error exporting document:", error);

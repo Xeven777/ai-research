@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Function to generate content based on topics
 const generateContent = (
   mainTopic: string,
   sectionTitle: string,

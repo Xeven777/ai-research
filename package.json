@@ -21,6 +21,7 @@
     "@types/file-saver": "^2.0.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "docx": "^9.2.0",
     "file-saver": "^2.0.5",
     "jspdf": "^3.0.0",
     "lucide-react": "^0.479.0",

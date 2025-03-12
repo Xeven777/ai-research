@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -18,8 +17,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Topic } from "@/lib/utils";
 import { FileText, FileTextIcon, ArrowRightIcon } from "lucide-react";
+import { Topic } from "@/lib/types";
 
 interface TopicFormProps {
   onSubmit: (topic: Topic) => void;
@@ -50,13 +49,10 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
   return (
     <div className="animate-fade-in">
       <Card className="w-full mx-auto overflow-hidden">
-        <CardHeader className="border-b border-border">
+        <CardHeader className="border-b pb-6 border-border">
           <CardTitle className=" text-2xl font-bold ">
             Research Parameters
           </CardTitle>
-          <p className="text-muted-foreground text-sm mt-1">
-            Enter the details for your research document to generate an outline.
-          </p>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="py-6 space-y-6">

@@ -7,10 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { DocumentOutline, Topic, exportDocument } from "@/lib/utils";
+import { exportDocument } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, FileDown, FileText, FileBox } from "lucide-react";
+import { ArrowLeft, FileText, FileBox } from "lucide-react";
+import { DocumentOutline, Topic } from "@/lib/types";
 
 interface DocumentPreviewProps {
   outline: DocumentOutline;
@@ -130,7 +131,7 @@ const DocumentPreview: React.FC<DocumentPreviewProps> = ({
           </ScrollArea>
         </CardContent>
 
-        <CardFooter className="border-t border-border bg-secondary flex justify-between">
+        <CardFooter className="border-t pt-6 flex justify-between">
           <Button
             variant="outline"
             onClick={onBack}
