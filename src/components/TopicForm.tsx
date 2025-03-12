@@ -29,7 +29,6 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
   const [topicDescription, setTopicDescription] = useState("");
   const [documentLength, setDocumentLength] = useState<number>(10);
   const [outputFormat, setOutputFormat] = useState<"DOCX" | "PDF">("DOCX");
-  const [citationFormat, setCitationFormat] = useState("APA");
   const [academicLevel, setAcademicLevel] = useState("Undergraduate");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,7 +40,6 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
       documentLength,
       outputFormat,
       topicDescription,
-      citationFormat,
       academicLevel,
     });
   };
@@ -55,10 +53,10 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
           </CardTitle>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="py-6 space-y-6">
+          <CardContent className="py-6 space-y-10">
             <div>
               <div className="flex items-center mb-2">
-                <FileTextIcon className="mr-2 h-5 w-5 text-muted-foreground" />
+                <FileTextIcon className="mr-2 size-4 text-muted-foreground" />
                 <Label htmlFor="topic" className="font-medium ">
                   Research Topic
                 </Label>
@@ -77,7 +75,7 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
 
             <div>
               <div className="flex items-center mb-2">
-                <FileText className="mr-2 h-5 w-5 text-muted-foreground" />
+                <FileText className="mr-2 size-4 text-muted-foreground" />
                 <Label htmlFor="description" className="font-medium ">
                   Topic Description
                 </Label>
@@ -95,7 +93,7 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <Label htmlFor="length" className="font-medium  block mb-2">
                   Document Length
@@ -119,30 +117,7 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
               </div>
 
               <div>
-                <Label htmlFor="citation" className="font-medium  block mb-2">
-                  Citation Format
-                </Label>
-                <Select
-                  value={citationFormat}
-                  onValueChange={setCitationFormat}
-                >
-                  <SelectTrigger id="citation">
-                    <SelectValue placeholder="Select format" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="APA">APA</SelectItem>
-                    <SelectItem value="MLA">MLA</SelectItem>
-                    <SelectItem value="Chicago">Chicago</SelectItem>
-                    <SelectItem value="Harvard">Harvard</SelectItem>
-                  </SelectContent>
-                </Select>
-                <p className="text-xs text-muted-foreground mt-1">
-                  The citation style for your document.
-                </p>
-              </div>
-
-              <div>
-                <Label htmlFor="level" className="font-medium  block mb-2">
+                <Label htmlFor="level" className="font-medium block mb-2">
                   Academic Level
                 </Label>
                 <Select value={academicLevel} onValueChange={setAcademicLevel}>

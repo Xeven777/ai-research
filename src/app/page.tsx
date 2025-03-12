@@ -5,7 +5,13 @@ import OutlineGenerator from "@/components/OutlineGenerator";
 import ContentGenerator from "@/components/ContentGenerator";
 import DocumentPreview from "@/components/DocumentPreview";
 import { AnimatePresence, motion } from "motion/react";
-import { ClipboardList, Pencil, FileText, FileDown } from "lucide-react";
+import {
+  ClipboardList,
+  Pencil,
+  FileText,
+  FileDown,
+  Loader,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DocumentOutline, Topic } from "@/lib/types";
 import { generateAIOutline } from "@/lib/actions/outline";
@@ -13,12 +19,14 @@ import { toast } from "sonner";
 
 const Index = () => {
   const [step, setStep] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
   const [topicInfo, setTopicInfo] = useState<Topic | null>(null);
   const [documentOutline, setDocumentOutline] =
     useState<DocumentOutline | null>(null);
 
   const handleTopicSubmit = async (topic: Topic) => {
     setTopicInfo(topic);
+    setLoading(true);
     try {
       const outline = await generateAIOutline(
         topic.mainTopic,
@@ -31,6 +39,8 @@ const Index = () => {
     } catch (error: any) {
       console.error("Failed to generate outline:", error);
       toast.error(`Failed to generate outline: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,7 +53,6 @@ const Index = () => {
   };
 
   const handleGenerateProgress = (progress: number) => {
-    // Track generation progress for potential UI indicators
     console.log(`Content generation progress: ${progress}%`);
   };
 
@@ -71,6 +80,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
+      {loading && (
+        <div className="fixed flex justify-center items-center inset-0 size-full z-50 bg-background/70 ">
+          <Loader className="size-28 ease-in text-primary animate-spin" />
+        </div>
+      )}
       <header className="py-6 px-6 md:px-8 shadow-sm border-b border-border">
         <div className="container mx-auto">
           <h1 className="text-3xl  font-bold">ResearchDocs</h1>
