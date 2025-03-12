@@ -24,18 +24,25 @@ const aiOutlineSchema = z.object({
 });
 
 export async function generateAIOutline(
-  topic: string
+  topic: string,
+  academicLevel: string,
+  documentLength: number
 ): Promise<DocumentOutline> {
   try {
     const { object } = await generateObject({
-      model: google("gemini-2.0-flash-001"),
+      model: google("gemini-2.0-flash-001", {
+        useSearchGrounding: true,
+      }),
       system:
         "You are a helpful assistant that specializes in creating detailed research document outlines.",
       prompt: `Generate a detailed research document outline for the topic: "${topic}". 
-        Include 5-7 main sections with 2-4 subtopics each.`,
+        The document should be suitable for an ${academicLevel} level and approximately ${documentLength} pages long.
+        So include main sections according to that with 2-4 subtopics each.`,
+      schemaName: "DocumentOutline",
+      schemaDescription: "Document outline schema with sections and subtopics",
       schema: aiOutlineSchema,
     });
-
+    
     const sections = object.sections.map((section) => ({
       id: nanoid(5),
       title: section.title,
@@ -55,7 +62,6 @@ export async function generateAIOutline(
   } catch (error) {
     console.error("Error generating AI outline:", error);
 
-    // Fallback to the static outline generator
     return generateStaticOutline(topic);
   }
 }

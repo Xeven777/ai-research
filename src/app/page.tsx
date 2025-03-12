@@ -20,7 +20,11 @@ const Index = () => {
   const handleTopicSubmit = async (topic: Topic) => {
     setTopicInfo(topic);
     try {
-      const outline = await generateAIOutline(topic.mainTopic);
+      const outline = await generateAIOutline(
+        topic.mainTopic,
+        topic.academicLevel || "undergraduate",
+        topic.documentLength
+      );
       setDocumentOutline(outline);
       setStep(2);
       toast.success("Outline generated successfully!");
