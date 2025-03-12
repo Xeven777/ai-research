@@ -10,7 +10,6 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     viewTransition: true,
-    useLightningcss: true,
   },
 };
 
