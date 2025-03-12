@@ -19,6 +19,7 @@ interface OutlineGeneratorProps {
   onOutlineUpdate: (outline: DocumentOutline) => void;
   onBack: () => void;
   onNext: () => void;
+  isLoading?: boolean;
 }
 
 const OutlineGenerator: React.FC<OutlineGeneratorProps> = ({
@@ -26,6 +27,7 @@ const OutlineGenerator: React.FC<OutlineGeneratorProps> = ({
   onOutlineUpdate,
   onBack,
   onNext,
+  isLoading = false,
 }) => {
   const [localOutline, setLocalOutline] = useState<DocumentOutline>(outline);
 
@@ -93,87 +95,97 @@ const OutlineGenerator: React.FC<OutlineGeneratorProps> = ({
         <CardHeader className="border-b">
           <CardTitle className=" text-2xl">Research Outline</CardTitle>
           <CardDescription>
-            Review and customize your document outline
+            Review and customize your AI-generated document outline
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-6 pb-2">
-          <div className="space-y-6">
-            <div>
-              <h3 className=" text-xl mb-2">{localOutline.mainTopic}</h3>
-              <Separator className="mb-4" />
+          {isLoading ? (
+            <div className="flex flex-col items-center justify-center space-y-4 py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+              <p className="text-muted-foreground">
+                Generating your outline with AI...
+              </p>
             </div>
-
-            <ScrollArea className="h-[400px] pr-4 -mr-4">
-              <div className="space-y-4">
-                {localOutline.sections.map((section, sectionIndex) => (
-                  <div
-                    key={section.id}
-                    className="border border-border rounded-md overflow-hidden bg-secondary/30"
-                  >
-                    <div className="flex items-center p-3 bg-secondary/50 border-b border-border">
-                      <Checkbox
-                        id={`section-${section.id}`}
-                        checked={section.isSelected}
-                        onCheckedChange={() =>
-                          toggleSectionSelection(section.id)
-                        }
-                        className="mr-3"
-                      />
-                      <label
-                        htmlFor={`section-${section.id}`}
-                        className="flex-1 font-medium cursor-pointer"
-                      >
-                        {sectionIndex + 1}. {section.title}
-                      </label>
-                    </div>
-
-                    <div
-                      className={`p-3 space-y-2 ${
-                        !section.isSelected ? "opacity-50" : ""
-                      }`}
-                    >
-                      {section.subtopics.map((subtopic, subtopicIndex) => (
-                        <div
-                          key={subtopic.id}
-                          className="flex items-center ml-6"
-                        >
-                          <Checkbox
-                            id={`subtopic-${subtopic.id}`}
-                            checked={subtopic.isSelected}
-                            onCheckedChange={() =>
-                              toggleSubtopicSelection(section.id, subtopic.id)
-                            }
-                            disabled={!section.isSelected}
-                            className="mr-3"
-                          />
-                          <label
-                            htmlFor={`subtopic-${subtopic.id}`}
-                            className="cursor-pointer"
-                          >
-                            {sectionIndex + 1}.{subtopicIndex + 1}{" "}
-                            {subtopic.title}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+          ) : (
+            <div className="space-y-6">
+              <div>
+                <h3 className=" text-xl mb-2">{localOutline.mainTopic}</h3>
+                <Separator className="mb-4" />
               </div>
-            </ScrollArea>
-          </div>
+
+              <ScrollArea className="h-[400px] pr-4 -mr-4">
+                <div className="space-y-4">
+                  {localOutline.sections.map((section, sectionIndex) => (
+                    <div
+                      key={section.id}
+                      className="border border-border rounded-md overflow-hidden bg-secondary/30"
+                    >
+                      <div className="flex items-center p-3 bg-secondary/50 border-b border-border">
+                        <Checkbox
+                          id={`section-${section.id}`}
+                          checked={section.isSelected}
+                          onCheckedChange={() =>
+                            toggleSectionSelection(section.id)
+                          }
+                          className="mr-3"
+                        />
+                        <label
+                          htmlFor={`section-${section.id}`}
+                          className="flex-1 font-medium cursor-pointer"
+                        >
+                          {sectionIndex + 1}. {section.title}
+                        </label>
+                      </div>
+
+                      <div
+                        className={`p-3 space-y-2 ${
+                          !section.isSelected ? "opacity-50" : ""
+                        }`}
+                      >
+                        {section.subtopics.map((subtopic, subtopicIndex) => (
+                          <div
+                            key={subtopic.id}
+                            className="flex items-center ml-6"
+                          >
+                            <Checkbox
+                              id={`subtopic-${subtopic.id}`}
+                              checked={subtopic.isSelected}
+                              onCheckedChange={() =>
+                                toggleSubtopicSelection(section.id, subtopic.id)
+                              }
+                              disabled={!section.isSelected}
+                              className="mr-3"
+                            />
+                            <label
+                              htmlFor={`subtopic-${subtopic.id}`}
+                              className="cursor-pointer"
+                            >
+                              {sectionIndex + 1}.{subtopicIndex + 1}{" "}
+                              {subtopic.title}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+            </div>
+          )}
         </CardContent>
         <CardFooter className="border-t pt-6 mt-4 flex justify-between">
           <Button
             variant="outline"
             onClick={onBack}
             className="px-6 flex items-center gap-2"
+            disabled={isLoading}
           >
             <ArrowLeft size={16} /> Back
           </Button>
 
           <Button
             onClick={onNext}
-            disabled={!anySectionSelected}
+            disabled={!anySectionSelected || isLoading}
             className="px-6 flex items-center gap-2"
           >
             Next <ArrowRight size={16} />

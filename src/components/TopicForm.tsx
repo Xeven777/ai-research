@@ -27,7 +27,7 @@ interface TopicFormProps {
 const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
   const [mainTopic, setMainTopic] = useState("");
   const [topicDescription, setTopicDescription] = useState("");
-  const [documentLength, setDocumentLength] = useState<number>(5);
+  const [documentLength, setDocumentLength] = useState<number>(10);
   const [outputFormat, setOutputFormat] = useState<"DOCX" | "PDF">("DOCX");
   const [citationFormat, setCitationFormat] = useState("APA");
   const [academicLevel, setAcademicLevel] = useState("Undergraduate");
@@ -108,10 +108,9 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                     <SelectValue placeholder="Select length" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="1">Short (1-3 pages)</SelectItem>
-                    <SelectItem value="5">Medium (5-10 pages)</SelectItem>
-                    <SelectItem value="15">Long (15-20 pages)</SelectItem>
-                    <SelectItem value="25">Extended (25+ pages)</SelectItem>
+                    <SelectItem value="4">Short (1-4 pages)</SelectItem>
+                    <SelectItem value="10">Medium (5-10 pages)</SelectItem>
+                    <SelectItem value="20">Long (15-20 pages)</SelectItem>
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-muted-foreground mt-1">
