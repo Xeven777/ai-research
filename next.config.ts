@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    viewTransition: true,
+    useLightningcss: true,
+  },
 };
 
 export default nextConfig;

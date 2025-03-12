@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Lora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
-import ThemeTogglebutton from "@/components/ui/ThemeToggle";
 import ToasterwithTheme from "@/components/ui/ToasterwithTheme";
+import { unstable_ViewTransition as ViewTransition } from "react";
+import Navbar from "@/components/Navbar";
 
 const font = Lora({ subsets: ["latin"] });
 
@@ -21,8 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <ThemeProvider attribute="class">
-          <ThemeTogglebutton className="absolute top-2 right-6" />
-          {children}
+          <Navbar />
+          <ViewTransition>{children}</ViewTransition>
           <ToasterwithTheme />
         </ThemeProvider>
       </body>
