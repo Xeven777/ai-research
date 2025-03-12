@@ -4,6 +4,7 @@ import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
 import type { DocumentOutline, Section } from "@/lib/types";
+import { nanoid } from "nanoid";
 
 const subtopicSchema = z.object({
   id: z.string(),
@@ -12,15 +13,14 @@ const subtopicSchema = z.object({
   content: z.string(),
 });
 
-const sectionSchema = z.object({
-  id: z.string(),
+// Schema for AI to generate basic structure
+const aiSectionSchema = z.object({
   title: z.string(),
-  isSelected: z.boolean(),
-  subtopics: z.array(subtopicSchema),
+  subtopics: z.array(z.string()),
 });
 
-const outlineSchema = z.object({
-  sections: z.array(sectionSchema),
+const aiOutlineSchema = z.object({
+  sections: z.array(aiSectionSchema),
 });
 
 export async function generateAIOutline(
@@ -32,16 +32,25 @@ export async function generateAIOutline(
       system:
         "You are a helpful assistant that specializes in creating detailed research document outlines.",
       prompt: `Generate a detailed research document outline for the topic: "${topic}". 
-        Include 5-7 main sections with 2-4 subtopics each.
-        For each subtopic, provide a brief content paragraph that would serve as an introduction or summary.
-        Make sure each section and subtopic has a unique ID and isSelected is set to true by default.`,
-      schema: outlineSchema,
+        Include 5-7 main sections with 2-4 subtopics each.`,
+      schema: aiOutlineSchema,
     });
 
-    // Return the validated outline with the main topic
+    const sections = object.sections.map((section) => ({
+      id: nanoid(5),
+      title: section.title,
+      isSelected: true,
+      subtopics: section.subtopics.map((subtopicTitle) => ({
+        id: nanoid(5),
+        title: subtopicTitle,
+        isSelected: true,
+        content: "",
+      })),
+    }));
+
     return {
       mainTopic: topic,
-      sections: object.sections,
+      sections: sections,
     };
   } catch (error) {
     console.error("Error generating AI outline:", error);
@@ -51,9 +60,7 @@ export async function generateAIOutline(
   }
 }
 
-// Fallback static outline generator
 function generateStaticOutline(topic: string): DocumentOutline {
-  // Same as the existing generateOutline function
   const sections: Section[] = [
     {
       id: "1",

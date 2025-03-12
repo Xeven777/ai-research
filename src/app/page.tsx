@@ -9,6 +9,7 @@ import { ClipboardList, Pencil, FileText, FileDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DocumentOutline, Topic } from "@/lib/types";
 import { generateAIOutline } from "@/lib/actions/outline";
+import { toast } from "sonner";
 
 const Index = () => {
   const [step, setStep] = useState<number>(1);
@@ -16,12 +17,17 @@ const Index = () => {
   const [documentOutline, setDocumentOutline] =
     useState<DocumentOutline | null>(null);
 
-  const handleTopicSubmit = (topic: Topic) => {
+  const handleTopicSubmit = async (topic: Topic) => {
     setTopicInfo(topic);
-    generateAIOutline(topic.mainTopic).then((outline) => {
+    try {
+      const outline = await generateAIOutline(topic.mainTopic);
       setDocumentOutline(outline);
       setStep(2);
-    });
+      toast.success("Outline generated successfully!");
+    } catch (error: any) {
+      console.error("Failed to generate outline:", error);
+      toast.error(`Failed to generate outline: ${error.message}`);
+    }
   };
 
   const handleOutlineUpdate = (outline: DocumentOutline) => {

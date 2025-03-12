@@ -3,6 +3,7 @@ import { Lora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import ThemeTogglebutton from "@/components/ui/ThemeToggle";
+import ToasterwithTheme from "@/components/ui/ToasterwithTheme";
 
 const font = Lora({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class">
           <ThemeTogglebutton className="absolute top-2 right-6" />
           {children}
+          <ToasterwithTheme />
         </ThemeProvider>
       </body>
     </html>
