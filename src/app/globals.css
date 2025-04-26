@@ -270,3 +270,18 @@
     transform: translateY(0);
   }
 }
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(247, 197, 60, 0.4);
+}
+
+.glow {
+  box-shadow: 0 0 14px rgba(247, 197, 60, 0.4);
+}
+
+.insetshadow {
+  box-shadow: inset 0 0 20px rgba(247, 197, 60, 0.1);
+}
+.bigshadow {
+  box-shadow: 0 -10px 50px #fcc1201c;
+}
