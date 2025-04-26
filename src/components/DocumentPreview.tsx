@@ -25,7 +25,7 @@ const DocumentPreview: React.FC<DocumentPreviewProps> = ({
   onBack,
 }) => {
   const handleExport = (format: "DOCX" | "PDF") => {
-    exportDocument(outline, format);
+    exportDocument(outline, format, topicInfo);
   };
 
   // Filter to only include selected sections and subtopics
@@ -40,56 +40,61 @@ const DocumentPreview: React.FC<DocumentPreviewProps> = ({
     <div className="animate-fade-in">
       <Card className="w-full max-w-4xl mx-auto overflow-hidden">
         <CardHeader className="border-b flex flex-row justify-between items-center">
-          <CardTitle className=" text-2xl">Document Preview</CardTitle>
+          <CardTitle className="text-2xl">Document Preview</CardTitle>
         </CardHeader>
 
         <CardContent className="p-0">
           <ScrollArea className="h-[600px]">
-            <div className="p-8 paper-content">
+            <div className="p-8 paper-content bg-white dark:bg-zinc-900 shadow-sm">
               {/* Cover Page */}
-              <div className="text-center mb-16 mt-8">
-                <h1 className=" text-3xl font-bold mb-8">
-                  {outline.mainTopic}
-                </h1>
-                <p className="text-muted-foreground">Research Document</p>
-                <p className="text-muted-foreground">
-                  Generated with Research Document Generator
+              <div className="text-center mb-16 mt-8 border border-border p-10 rounded-md shadow-sm">
+                <h1 className="text-4xl font-bold mb-8">{outline.mainTopic}</h1>
+                {topicInfo?.academicLevel && (
+                  <p className="text-xl mb-8">
+                    {topicInfo.academicLevel} Level Research Paper
+                  </p>
+                )}
+                <p className="text-muted-foreground mt-12">
+                  Prepared by: Student Name
                 </p>
-                <p className="text-muted-foreground mt-4">
-                  {new Date().toLocaleDateString()}
+                <p className="text-muted-foreground mt-2">
+                  Institution: University Name
+                </p>
+                <p className="text-muted-foreground mt-8">
+                  Date: {new Date().toLocaleDateString()}
                 </p>
               </div>
 
               {/* Table of Contents */}
-              <div className="mb-12">
-                <h2 className=" text-xl font-semibold mb-4">
+              <div className="mb-12 border border-border p-6 rounded-md shadow-sm">
+                <h2 className="text-2xl font-semibold mb-4">
                   Table of Contents
                 </h2>
-                <Separator className="mb-4" />
+                <Separator className="mb-6" />
 
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {selectedSections.map((section, sectionIndex) => (
-                    <div key={section.id}>
-                      <p className="flex justify-between">
+                    <div key={section.id} className="mb-4">
+                      <p className="flex justify-between font-medium">
                         <span>
                           {sectionIndex + 1}. {section.title}
                         </span>
                         <span className="text-muted-foreground">
-                          Page {sectionIndex + 1}
+                          Page {sectionIndex + 3}
                         </span>
                       </p>
 
                       {section.subtopics.map((subtopic, subtopicIndex) => (
                         <p
                           key={subtopic.id}
-                          className="flex justify-between ml-6"
+                          className="flex justify-between ml-6 mt-2"
                         >
                           <span>
                             {sectionIndex + 1}.{subtopicIndex + 1}.{" "}
                             {subtopic.title}
                           </span>
                           <span className="text-muted-foreground">
-                            Page {sectionIndex + 1}
+                            Page {sectionIndex + 3}
                           </span>
                         </p>
                       ))}
@@ -101,14 +106,17 @@ const DocumentPreview: React.FC<DocumentPreviewProps> = ({
               {/* Document Content */}
               <div className="space-y-12">
                 {selectedSections.map((section, sectionIndex) => (
-                  <div key={section.id} className="document-section">
-                    <h2 className="document-heading">
+                  <div
+                    key={section.id}
+                    className="document-section border border-border p-6 rounded-md shadow-sm mb-8"
+                  >
+                    <h2 className="text-2xl font-bold mb-6">
                       {sectionIndex + 1}. {section.title}
                     </h2>
 
                     {section.subtopics.map((subtopic, subtopicIndex) => (
                       <div key={subtopic.id} className="mt-6">
-                        <h3 className="document-subheading">
+                        <h3 className="text-xl font-semibold mb-4">
                           {sectionIndex + 1}.{subtopicIndex + 1}.{" "}
                           {subtopic.title}
                         </h3>
@@ -117,7 +125,10 @@ const DocumentPreview: React.FC<DocumentPreviewProps> = ({
                           {subtopic.content
                             .split("\n\n")
                             .map((paragraph, i) => (
-                              <p key={i} className="document-paragraph">
+                              <p
+                                key={i}
+                                className="text-base leading-relaxed mb-4"
+                              >
                                 {paragraph}
                               </p>
                             ))}

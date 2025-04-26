@@ -159,3 +159,78 @@
   background-color: hsl(var(--primary) / 0.4);
   border-radius: 3px;
 }
+
+/* Document Preview Styles */
+.paper-content {
+  font-family: "Lora", serif;
+  line-height: 1.6;
+}
+
+.paper-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
+
+.paper-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.paper-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.paper-content p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.document-section {
+  page-break-before: always;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+}
+
+@media print {
+  .paper-content {
+    font-size: 12pt;
+  }
+
+  .paper-content h1 {
+    font-size: 18pt;
+  }
+
+  .paper-content h2 {
+    font-size: 16pt;
+  }
+
+  .paper-content h3 {
+    font-size: 14pt;
+  }
+
+  .paper-content p {
+    font-size: 12pt;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
