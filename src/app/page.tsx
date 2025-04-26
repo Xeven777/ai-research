@@ -19,12 +19,13 @@ import {
   Clock,
 } from "lucide-react";
 import { motion as m } from "motion/react";
+import Image from "next/image";
 
 const Page = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col w-full">
       {/* Hero Section */}
-      <section className="relative w-full min-h-[90vh] flex flex-col items-center justify-center overflow-hidden">
+      <section className="relative w-full py-20 min-h-dvh flex flex-col items-center justify-center overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top_right,hsl(var(--primary)/0.3),transparent_40%),radial-gradient(circle_at_bottom_left,hsl(var(--secondary)/0.3),transparent_40%)]"></div>
         <div className="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl -z-10"></div>
@@ -61,24 +62,16 @@ const Page = () => {
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-full px-8 text-lg"
-            >
-              Learn More
-            </Button>
           </m.div>
 
-          {/* Preview Image/Animation */}
           <m.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="relative w-full max-w-5xl mt-12 rounded-xl overflow-hidden shadow-2xl border border-border/50"
+            className="relative hidden sm:block w-full max-w-5xl mt-12 rounded-xl overflow-hidden shadow-2xl border border-border/50"
           >
             <div className="aspect-[16/9] bg-card/80 backdrop-blur-sm flex items-center justify-center">
-              <div className="w-full max-w-3xl h-full p-6 flex flex-col">
+              <div className="w-full max-w-4xl h-full p-6 flex flex-col">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-3 h-3 rounded-full bg-destructive"></div>
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -88,12 +81,6 @@ const Page = () => {
                 <div className="flex-1 flex flex-col gap-4">
                   <div className="h-8 w-3/4 bg-primary/10 rounded-md"></div>
                   <div className="flex gap-4 flex-1">
-                    <div className="w-1/3 flex flex-col gap-3">
-                      <div className="h-10 bg-primary/10 rounded-md"></div>
-                      <div className="h-10 bg-primary/10 rounded-md"></div>
-                      <div className="h-10 bg-primary/10 rounded-md"></div>
-                      <div className="flex-1"></div>
-                    </div>
                     <div className="w-2/3 bg-primary/5 rounded-md p-4 flex flex-col gap-2">
                       <div className="h-6 w-3/4 bg-primary/10 rounded-md"></div>
                       <div className="h-4 w-full bg-primary/10 rounded-md"></div>
@@ -102,17 +89,31 @@ const Page = () => {
                       <div className="h-4 w-full bg-primary/10 rounded-md"></div>
                       <div className="h-4 w-4/5 bg-primary/10 rounded-md"></div>
                     </div>
+                    <Image
+                      src="/assets/Research.svg"
+                      alt=""
+                      width={400}
+                      className="h-auto lg:w-96 md:w-80 w-52 "
+                      height={100}
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </m.div>
+          <Image
+            src="/assets/Research.svg"
+            alt=""
+            width={400}
+            className="h-auto w-56 sm:hidden mt-10"
+            height={100}
+          />
         </div>
       </section>
 
       {/* Features Section */}
       <section className="w-full py-20 bg-muted/30">
-        <div className="container px-4 md:px-6">
+        <div className="container px-4 md:px-6 max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Powerful Features
@@ -187,7 +188,7 @@ const Page = () => {
 
       {/* How It Works Section */}
       <section className="w-full py-20">
-        <div className="container px-4 md:px-6">
+        <div className="container max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               How It Works
@@ -240,7 +241,7 @@ const Page = () => {
 
       {/* Benefits Section */}
       <section className="w-full py-20 bg-muted/30">
-        <div className="container px-4 md:px-6">
+        <div className="container  max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Why Choose ResearchX
@@ -315,7 +316,7 @@ const Page = () => {
       <section className="w-full py-24 relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.15),transparent_70%)]"></div>
 
-        <div className="container px-4 md:px-6 flex flex-col items-center text-center">
+        <div className="container max-w-7xl mx-auto px-4 md:px-6 flex flex-col items-center text-center">
           <h2 className="text-3xl md:text-5xl font-bold mb-6 max-w-3xl">
             Ready to Transform Your Research Process?
           </h2>
