@@ -10,7 +10,7 @@ const font = Lora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "AI Document Research",
-  description: "Generate whole research documents using AI instantly",
+  description: "Generate whole research documents using AI instantly✨🔖",
 };
 
 export default function RootLayout({
