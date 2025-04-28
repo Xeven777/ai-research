@@ -109,7 +109,7 @@ const Page = () => {
     <div className="min-h-screen flex flex-col w-full dark:bg-neutral-900">
       {/* Hero Section */}
       <section className="relative w-full py-24 min-h-dvh flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 lg:w-2/5 md:w-[500px] h-72 bg-primary/20 rounded-full blur-[300px]" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 lg:w-2/3 h-72 bg-primary/20 rounded-full blur-[300px]" />
         <div className="container px-4 md:px-6 flex flex-col items-center text-center gap-6 pt-8 md:pt-12">
           <m.div
             initial={{ opacity: 0, y: 20 }}
@@ -120,7 +120,7 @@ const Page = () => {
             <h1
               className={cn(
                 instrumentserif.className,
-                "text-4xl md:text-6xl font-bold text-glow"
+                "text-4xl md:text-6xl font-bold text-glow text-focus"
               )}
             >
               AI Document
@@ -140,7 +140,7 @@ const Page = () => {
                 stroke="#E1B10D"
               />
             </h1>
-            <p className="text-base md:text-2xl text-muted-foreground max-w-[800px]">
+            <p className="text-base md:text-xl text-muted-foreground max-w-4xl mt-2">
               Generate comprehensive research documents instantly with the power
               of AI
             </p>
@@ -149,7 +149,7 @@ const Page = () => {
           <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay:0.6 }}
             className="flex flex-col sm:flex-row gap-4 mt-6"
           >
             <Link href="/gen">
@@ -166,7 +166,7 @@ const Page = () => {
           <m.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
+            transition={{ duration: 0.7, delay: 0.8 }}
             className="relative hidden sm:block w-full max-w-5xl mt-12 rounded-xl overflow-hidden shadow-2xl border border-border/50 bigshadow"
           >
             <div className="aspect-[16/9] bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm flex items-center justify-center">

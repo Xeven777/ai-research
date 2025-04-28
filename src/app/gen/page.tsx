@@ -219,7 +219,7 @@ const Index = () => {
       </main>
 
       <footer className="py-4 px-6 border-t text-center text-sm text-muted-foreground">
-        <p>ResearchDocs • Professional Document Generator</p>
+        <p>ResearchX AI • Professional Document Generator</p>
       </footer>
     </div>
   );
