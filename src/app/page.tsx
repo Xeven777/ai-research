@@ -108,11 +108,8 @@ const Page = () => {
   return (
     <div className="min-h-screen flex flex-col w-full dark:bg-neutral-900">
       {/* Hero Section */}
-      <section className="relative w-full py-20 min-h-dvh flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 lg:w-[500px] h-72 bg-primary/20 rounded-full blur-[300px]"></div>
-        {/*
-        <div className="absolute bottom-20 right-20 w-72 h-72 bg-secondary/20 rounded-full blur-3xl"></div>
-        */}
+      <section className="relative w-full py-24 min-h-dvh flex flex-col items-center justify-center overflow-hidden">
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 lg:w-2/5 md:w-[500px] h-72 bg-primary/20 rounded-full blur-[300px]" />
         <div className="container px-4 md:px-6 flex flex-col items-center text-center gap-6 pt-8 md:pt-12">
           <m.div
             initial={{ opacity: 0, y: 20 }}
@@ -126,16 +123,24 @@ const Page = () => {
                 "text-4xl md:text-6xl font-bold text-glow"
               )}
             >
-              AI Document Research{" "}
+              AI Document
+              <span className="px-2 md:px-4 relative">
+                <img
+                  src={"/assets/line.svg"}
+                  alt="."
+                  className="absolute -bottom-1 left-3 z-10 w-11/12 -rotate-5"
+                />
+                <p className="inline relative z-20">Research</p>
+              </span>
               <Sparkles
-                className="inline size-12 animate-pulse"
+                className="size-12 animate-pulse md:inline hidden"
                 strokeWidth={1.1}
                 fillOpacity={1}
                 fill="#E1B10D"
                 stroke="#E1B10D"
               />
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground max-w-[800px]">
+            <p className="text-base md:text-2xl text-muted-foreground max-w-[800px]">
               Generate comprehensive research documents instantly with the power
               of AI
             </p>
@@ -215,6 +220,16 @@ const Page = () => {
             height={100}
           />
         </div>
+        <img
+          src="/assets/dots.svg"
+          alt="."
+          className="absolute top-40 -left-20 opacity-60 hidden md:block"
+        />
+        <img
+          src="/assets/dots.svg"
+          alt="."
+          className="absolute bottom-80 -right-20 opacity-60 hidden md:block"
+        />
       </section>
 
       {/* Features Section */}
@@ -265,12 +280,19 @@ const Page = () => {
             <h2
               className={cn(
                 instrumentserif.className,
-                "text-3xl md:text-6xl font-bold mb-4"
+                "text-3xl md:text-6xl font-bold mb-4 inline relative"
               )}
             >
-              How It Works
+              <Image
+                src={"/assets/circle.svg"}
+                alt="."
+                width={200}
+                height={200}
+                className="absolute -top-5 w-full rotate-2 left-0 z-10 scale-[1.3] opacity-70 drop-shadow-amber-300/20 drop-shadow-lg"
+              />
+              <span className="relative z-20">How It Works?</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-8">
               Generate comprehensive research documents in just a few simple
               steps
             </p>
@@ -337,8 +359,7 @@ const Page = () => {
 
       {/* CTA Section */}
       <section className="w-full py-24 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.15),transparent_70%)]"></div>
-
+        <div className="absolute -bottom-60 left-1/2 -translate-x-1/2 lg:w-2/3 h-72 bg-primary/20 rounded-full blur-[300px]" />
         <div className="container max-w-7xl mx-auto px-4 md:px-6 flex flex-col items-center text-center">
           <h2
             className={cn(
