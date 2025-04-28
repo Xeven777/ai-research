@@ -149,7 +149,7 @@ const Page = () => {
           <m.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay:0.6 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 mt-6"
           >
             <Link href="/gen">
@@ -385,6 +385,22 @@ const Page = () => {
             </Button>
           </Link>
         </div>
+        <p
+          className={cn(
+            instrumentserif.className,
+            "absolute bottom-4 right-4 text-sm text-muted-foreground tracking-wider"
+          )}
+        >
+          Made by{" "}
+          <a
+            href="http://anish7.me"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline hover:text-primary duration-300 transition-all"
+          >
+            Anish
+          </a>
+        </p>
       </section>
     </div>
   );
