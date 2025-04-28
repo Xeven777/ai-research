@@ -1,61 +1,93 @@
-# Next.js Project with ShadCn
+# ResearchX ✨📚 - AI-Powered Document Research Generator
 
-This project demonstrates a basic setup of a Next.js application integrated with ShadCn UI and comes with theme toggle for dark and light modes.
+![alt text](src/app/opengraph.png)
 
-## Features ✨
+Generate comprehensive research documents instantly with the power of AI. Whether you're a student, researcher, or professional, ResearchX simplifies the research process and saves you time.
 
-- **NextJS 15 app router**: Build your UI with the latest version of NextJS 14.
-- **Tailwind CSS v4**: Style your application with utility-first CSS framework Tailwind CSS.
-- **Shadcn UI** : The most trending UI library for modern looking apps. Input, button, sheet, sonner , dropdown and avatar already added!
-- **Theme Toggle**: Includes functionality for switching between dark and light themes, improving user experience and accessibility.
+## ✨ Features
 
+- 🧠 **AI-Powered Research** - Generate comprehensive research documents using cutting-edge AI models
+- 📝 **Customizable Outlines** - Create and edit document outlines to match your specific research needs
+- 🎯 **Academic Precision** - Tailor content to different academic levels from high school to doctoral
+- 📊 **Multiple Export Formats** - Export your research as DOCX or PDF with proper formatting
+- 🌓 **Dark/Light Mode** - Comfortable viewing experience in any lighting condition
+- 🚀 **Built with Next.js 15** - Utilizing the latest web technologies for optimal performance
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) with App Router
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/) for utility-first styling
+- **UI Components**: [Shadcn UI](https://ui.shadcn.com/) for beautiful, accessible components
+- **AI Integration**: [AI SDK](https://sdk.vercel.ai/docs) with Google Gemini models
+- **Animations**: [Motion](https://motion.dev/) for smooth transitions
+- **Document Generation**: DOCX and PDF export capabilities
+
+## 🚀 Getting Started
 
 ### Prerequisites
 
-Ensure you have Node.js installed on your machine. You can check by running `node -v` in your terminal. If not, download and install it from [Node.js website](https://nodejs.org).
+- Node.js (v18 or newer)
+- npm, yarn, or bun
 
 ### Installation
 
-1. **You can either use this as a template or git clone it:**
+1. Clone the repository:
 
-   ```sh
-   git clone --depth 1 https://github.com/Xeven777/next-shadcn-template.git
-
+   ```bash
+   git clone https://github.com/Xeven777/ai-research.git
+   cd ai-research
    ```
 
-This will create a new directory named `next-shadcn-template` in your current directory.
+2. Install dependencies:
 
-2. **Remove the old `.git` directory and initialize a new one:**
-   Navigate to the new `next-shadcn-template` directory and run the following commands:
-
-   ```sh
-   cd next-shadcn-template
-   rm -rf .git
-   git init
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   bun install
    ```
 
-3. **Install the dependencies:**
-   Run the following command to install the project dependencies:
+3. Create a `.env.local` file in the root directory with your API keys:
 
-   ```sh
-   npm/bun install
+   ```
+   GOOGLE_GENERATIVE_AI_API_KEY=your_google_api_key
    ```
 
-4. **Start the development server:**
-   After installing the dependencies, start the development server by running:
+4. Start the development server:
 
-   ```sh
-   npm/bun run dev
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   bun dev
    ```
 
-   Now, you should be able to see the application running at `localhost:3000` in your web browser! ✨
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-##### You can also download the code as Zip or use it as a template.
+## 📋 How It Works
 
-### Contributing
+1. **Enter Research Parameters** - Specify your topic, academic level, and document length
+2. **Review & Customize Outline** - Edit the AI-generated outline to fit your needs
+3. **Generate Content** - Let AI create detailed content for each section
+4. **Preview & Export** - Review the final document and export in your preferred format
 
-We welcome contributions from the community. Whether you want to add new features, fix bugs, or improve documentation, your help is appreciated.
+## 🤝 Contributing
 
-### Owner
+Contributions are welcome! Feel free to open issues or submit pull requests to help improve ResearchX.
 
-The primary contact for inquiries about the project is [Anish Biswas](https://github.com/Xeven777). Feel free to reach out for any questions, suggestions, or issues related to the project. My [Linkedin](https://www.linkedin.com/in/anishbiswas777/).
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👤 Contact
+
+Created by [Anish Biswas](https://github.com/Xeven777) - Feel free to reach out on [LinkedIn](https://www.linkedin.com/in/anishbiswas777/)!
+
+---
+
+<div align="center">
+  <p>⭐ Star this repository if you find it useful! ⭐</p>
+  <p>Made with ❤️ using Next.js and AI</p>
+</div>
