@@ -1,7 +1,6 @@
 import React from "react";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -13,7 +12,7 @@ const Navbar = () => {
       <div className="flex items-center justify-center gap-2 px-2">
         <ThemeToggle />
         <a
-          //   href="http://github.com/xeven777"
+          href="https://github.com/Xeven777/ai-research"
           target="_blank"
           rel="noopener noreferrer"
         >

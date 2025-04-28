@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import React from "react";
 import {
   Card,
   CardContent,
@@ -20,6 +19,13 @@ import {
 } from "lucide-react";
 import { motion as m } from "motion/react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { Instrument_Serif } from "next/font/google";
+
+const instrumentserif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 // Features section data
 const features = [
@@ -103,9 +109,10 @@ const Page = () => {
     <div className="min-h-screen flex flex-col w-full dark:bg-neutral-900">
       {/* Hero Section */}
       <section className="relative w-full py-20 min-h-dvh flex flex-col items-center justify-center overflow-hidden">
-        <div className="absolute top-20 left-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl"></div>
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 lg:w-[500px] h-72 bg-primary/20 rounded-full blur-[300px]"></div>
+        {/*
         <div className="absolute bottom-20 right-20 w-72 h-72 bg-secondary/20 rounded-full blur-3xl"></div>
-
+        */}
         <div className="container px-4 md:px-6 flex flex-col items-center text-center gap-6 pt-8 md:pt-12">
           <m.div
             initial={{ opacity: 0, y: 20 }}
@@ -113,8 +120,20 @@ const Page = () => {
             transition={{ duration: 0.5 }}
             className="space-y-4"
           >
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-primary text-glow">
-              AI Document Research
+            <h1
+              className={cn(
+                instrumentserif.className,
+                "text-4xl md:text-6xl font-bold text-glow"
+              )}
+            >
+              AI Document Research{" "}
+              <Sparkles
+                className="inline size-12 animate-pulse"
+                strokeWidth={1.1}
+                fillOpacity={1}
+                fill="#E1B10D"
+                stroke="#E1B10D"
+              />
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground max-w-[800px]">
               Generate comprehensive research documents instantly with the power
@@ -145,7 +164,7 @@ const Page = () => {
             transition={{ duration: 0.7, delay: 0.4 }}
             className="relative hidden sm:block w-full max-w-5xl mt-12 rounded-xl overflow-hidden shadow-2xl border border-border/50 bigshadow"
           >
-            <div className="aspect-[16/9] bg-card/80 backdrop-blur-sm flex items-center justify-center">
+            <div className="aspect-[16/9] bg-white/80 dark:bg-neutral-900/80 backdrop-blur-sm flex items-center justify-center">
               <div className="w-full max-w-4xl h-full p-6 flex flex-col">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="w-3 h-3 rounded-full bg-destructive"></div>
@@ -199,10 +218,15 @@ const Page = () => {
       </section>
 
       {/* Features Section */}
-      <section className="w-full py-20 bg-muted/30">
+      <section className="w-full py-32 bg-muted/30">
         <div className="container px-4 md:px-6 max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2
+              className={cn(
+                instrumentserif.className,
+                "text-3xl md:text-6xl font-bold mb-4"
+              )}
+            >
               Powerful Features
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -235,10 +259,15 @@ const Page = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="w-full py-20">
+      <section className="w-full py-32">
         <div className="container max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2
+              className={cn(
+                instrumentserif.className,
+                "text-3xl md:text-6xl font-bold mb-4"
+              )}
+            >
               How It Works
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -268,10 +297,15 @@ const Page = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="w-full py-20 bg-muted/30">
+      <section className="w-full py-32 bg-muted/30">
         <div className="container  max-w-7xl mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2
+              className={cn(
+                instrumentserif.className,
+                "text-3xl md:text-6xl font-bold mb-4"
+              )}
+            >
               Why Choose ResearchX
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
@@ -306,7 +340,12 @@ const Page = () => {
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,hsl(var(--primary)/0.15),transparent_70%)]"></div>
 
         <div className="container max-w-7xl mx-auto px-4 md:px-6 flex flex-col items-center text-center">
-          <h2 className="text-3xl md:text-5xl font-bold mb-6 max-w-3xl">
+          <h2
+            className={cn(
+              instrumentserif.className,
+              "text-3xl md:text-6xl font-bold mb-6 max-w-3xl"
+            )}
+          >
             Ready to Transform Your Research Process?
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl">
