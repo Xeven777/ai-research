@@ -79,20 +79,23 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground pt-24">
+    <div className="min-h-screen flex flex-col bg-background text-foreground pt-16 md:pt-24">
       {loading && (
         <div className="fixed flex justify-center items-center inset-0 size-full z-50 bg-background/70 ">
           <Loader className="size-28 ease-in text-primary animate-spin" />
         </div>
       )}
 
-      <main className="flex-1 py-12 px-4">
-        <div className="container mx-auto max-w-4xl">
+      <main className="flex-1 py-8 md:py-12 px-4">
+        <div className="container mx-auto max-w-4xl px-0 sm:px-4">
           {/* Workflow Steps */}
-          <div className="rounded-lg border p-6 mb-8 shadow-sm bg-card text-card-foreground">
-            <div className="flex justify-between items-center relative">
+          <div className="rounded-lg border px-2 py-6 md:p-6 mb-8 shadow-sm bg-card text-card-foreground">
+            <div className="flex flex-wrap justify-around md:justify-between items-start md:items-center relative gap-y-4">
               {workflow.map((item, index) => (
-                <div key={index} className="flex flex-col items-center z-10">
+                <div
+                  key={index}
+                  className="flex flex-col items-center z-10 w-1/2 md:w-auto"
+                >
                   <div
                     className={`w-12 h-12 rounded-full flex items-center justify-center ${
                       index + 1 === step
@@ -119,7 +122,7 @@ const Index = () => {
               ))}
 
               {/* Progress bar */}
-              <div className="absolute top-6 left-0 w-full h-0.5 overflow-hidden rounded-full">
+              <div className="absolute top-6 left-0 w-full h-0.5 overflow-hidden rounded-full hidden md:block">
                 <div
                   className="h-0.5 bg-primary transition-all duration-300"
                   style={{
@@ -129,15 +132,24 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="flex mt-6 w-full justify-between">
+            <div className="flex mt-6 w-full flex-col sm:flex-row justify-between gap-2">
               {step > 1 && (
-                <Button onClick={() => goToStep(step - 1)} variant={"ghost"}>
+                <Button
+                  onClick={() => goToStep(step - 1)}
+                  variant={"ghost"}
+                  className="w-full sm:w-auto"
+                >
                   Previous
                 </Button>
               )}
-
+              <div className="sm:flex-grow" /> {/* Spacer */}
               {step < 4 && documentOutline && (
-                <Button onClick={() => goToStep(step + 1)}>Next</Button>
+                <Button
+                  onClick={() => goToStep(step + 1)}
+                  className="w-full sm:w-auto"
+                >
+                  Next
+                </Button>
               )}
             </div>
           </div>

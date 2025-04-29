@@ -45,7 +45,7 @@ const DocumentPreview: React.FC<DocumentPreviewProps> = ({
 
         <CardContent className="p-0">
           <ScrollArea className="h-[600px]">
-            <div className="p-8 paper-content bg-white dark:bg-zinc-900 shadow-sm">
+            <div className="sm:p-8 paper-content bg-stone-50 dark:bg-stone-900 shadow-sm">
               {/* Cover Page */}
               <div className="text-center mb-16 mt-8 border border-border p-10 rounded-md shadow-sm">
                 <h1 className="text-4xl font-bold mb-8">{outline.mainTopic}</h1>

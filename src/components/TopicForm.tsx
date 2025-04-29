@@ -48,16 +48,16 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
     <div className="animate-fade-in">
       <Card className="w-full mx-auto overflow-hidden">
         <CardHeader className="border-b pb-6 border-border">
-          <CardTitle className=" text-2xl font-bold ">
+          <CardTitle className="text-2xl font-bold">
             Research Parameters
           </CardTitle>
         </CardHeader>
         <form onSubmit={handleSubmit}>
-          <CardContent className="py-6 space-y-10">
+          <CardContent className="py-6 space-y-8 md:space-y-10">
             <div>
               <div className="flex items-center mb-2">
                 <FileTextIcon className="mr-2 size-4 text-muted-foreground" />
-                <Label htmlFor="topic" className="font-medium ">
+                <Label htmlFor="topic" className="font-medium">
                   Research Topic
                 </Label>
               </div>
@@ -67,6 +67,7 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                 value={mainTopic}
                 onChange={(e) => setMainTopic(e.target.value)}
                 required
+                className="w-full"
               />
               <p className="text-xs text-muted-foreground mt-1">
                 Provide a clear and specific research topic.
@@ -76,7 +77,7 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
             <div>
               <div className="flex items-center mb-2">
                 <FileText className="mr-2 size-4 text-muted-foreground" />
-                <Label htmlFor="description" className="font-medium ">
+                <Label htmlFor="description" className="font-medium">
                   Topic Description
                 </Label>
               </div>
@@ -86,6 +87,7 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                 value={topicDescription}
                 onChange={(e) => setTopicDescription(e.target.value)}
                 rows={5}
+                className="resize-y min-h-[100px]"
               />
               <p className="text-xs text-muted-foreground mt-1">
                 Include any specific aspects you want to focus on in your
@@ -93,16 +95,16 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
               <div>
-                <Label htmlFor="length" className="font-medium  block mb-2">
+                <Label htmlFor="length" className="font-medium block mb-2">
                   Document Length
                 </Label>
                 <Select
                   value={documentLength.toString()}
                   onValueChange={(value) => setDocumentLength(parseInt(value))}
                 >
-                  <SelectTrigger id="length">
+                  <SelectTrigger id="length" className="w-full">
                     <SelectValue placeholder="Select length" />
                   </SelectTrigger>
                   <SelectContent>
@@ -121,7 +123,7 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
                   Academic Level
                 </Label>
                 <Select value={academicLevel} onValueChange={setAcademicLevel}>
-                  <SelectTrigger id="level">
+                  <SelectTrigger id="level" className="w-full">
                     <SelectValue placeholder="Select level" />
                   </SelectTrigger>
                   <SelectContent>
@@ -137,10 +139,15 @@ const TopicForm: React.FC<TopicFormProps> = ({ onSubmit }) => {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="border-t border-border flex pt-6 justify-end">
-            <Button type="submit" size="lg" disabled={!mainTopic.trim()}>
+          <CardFooter className="border-t border-border flex flex-col sm:flex-row pt-6 gap-4 justify-end">
+            <Button
+              type="submit"
+              size="lg"
+              disabled={!mainTopic.trim()}
+              className="w-full sm:w-auto"
+            >
               Generate Outline
-              <ArrowRightIcon size={16} />
+              <ArrowRightIcon size={16} className="ml-2" />
             </Button>
           </CardFooter>
         </form>
