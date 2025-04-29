@@ -11,19 +11,24 @@ export async function generateAIContent(
 ): Promise<string> {
   try {
     const { text } = await generateText({
-      model: google("gemini-2.0-flash-001", {
-        useSearchGrounding: true,
+      model: google("gemini-2.0-flash-lite", {
+        // useSearchGrounding: true,
       }),
       system:
-        "You are a specialized academic content writer that creates well-researched, informative content. Write in a professional academic style appropriate for the specified academic level.",
-      prompt: `Write detailed content for the subtopic "${subtopicTitle}" within the section "${sectionTitle}" of a research document about "${mainTopic}". 
-      The content should be suitable for ${academicLevel} level.
-      Include relevant information, examples, and explanations where necessary.
-      Keep the academic style and within 100-120 words.
-      Do not include citations in brackets, but write as if the content is well-researched. Dont return in markdown format. Just return the content directly and nothing else.`,
+        "You are an expert academic writer. Your responses must be clear, concise, and factually accurate, using a formal academic tone suitable for the specified academic level.",
+      prompt: [
+        `Write a detailed, well-structured paragraph (100-120 words) for the subtopic "${subtopicTitle}" in the section "${sectionTitle}" of a research document on "${mainTopic}".`,
+        `Requirements:`,
+        `- Academic level: ${academicLevel}`,
+        `- Use clear academic language and logical flow.`,
+        `- Include relevant facts, explanations, and examples where appropriate.`,
+        `- Do NOT use markdown formatting or bullet points.`,
+        `- Do NOT include citations or references.`,
+        `- Output only the paragraph, with no headings or extra text.`,
+      ].join("\n"),
     });
 
-    return text;
+    return text.trim();
   } catch (error) {
     console.error("Error generating AI content:", error);
     return `An error occurred while generating content for "${subtopicTitle}". Please try again later.`;
