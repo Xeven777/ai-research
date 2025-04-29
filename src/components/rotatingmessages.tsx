@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { instrumentserif } from "@/app/page";
+import { Instrument_Serif } from "next/font/google";
+const instrumentserif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 interface RotatingMessagesProps {
   messages: string[];
