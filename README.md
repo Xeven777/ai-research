@@ -1,6 +1,6 @@
 # ResearchX ✨📚 - AI-Powered Document Research Generator
 
-![alt text](src/app/opengraph.png)
+![alt text](src/app/opengraph-image.png)
 
 Generate comprehensive research documents instantly with the power of AI. Whether you're a student, researcher, or professional, ResearchX simplifies the research process and saves you time.
 
