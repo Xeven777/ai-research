@@ -239,9 +239,9 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
     <div className="animate-fade-in">
       <Card className="w-full max-w-4xl mx-auto overflow-hidden">
         <CardHeader className="border-b">
-          <div className="flex justify-between items-start">
+          <div className="flex flex-col sm:flex-row gap-2 justify-between items-start">
             <div>
-              <CardTitle className="text-2xl">Generate Content</CardTitle>
+              <CardTitle className="text-xl leading-tight md:text-2xl">Generate Content</CardTitle>
               <CardDescription>
                 {allContentGenerated
                   ? "All content has been generated"
@@ -311,7 +311,7 @@ const ContentGenerator: React.FC<ContentGeneratorProps> = ({
                         .filter((subtopic) => subtopic.isSelected)
                         .map((subtopic, subtopicIndex) => (
                           <div key={subtopic.id} className="space-y-3">
-                            <div className="flex justify-between items-center">
+                            <div className="flex flex-col sm:flex-row justify-between gap-2 md:items-center">
                               <h3 className="text-lg font-medium">
                                 {subtopicIndex + 1}. {subtopic.title}
                               </h3>

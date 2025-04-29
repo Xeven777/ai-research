@@ -89,7 +89,7 @@ const Index = () => {
       <main className="flex-1 py-8 md:py-12 px-4">
         <div className="container mx-auto max-w-4xl px-0 sm:px-4">
           {/* Workflow Steps */}
-          <div className="rounded-lg border px-2 py-6 md:p-6 mb-8 shadow-sm bg-card text-card-foreground">
+          <div className="rounded-lg border-primary/30 border px-2 py-6 md:p-6 mb-8 shadow-sm bg-card text-card-foreground">
             <div className="flex flex-wrap justify-around md:justify-between items-start md:items-center relative gap-y-4">
               {workflow.map((item, index) => (
                 <div
@@ -230,7 +230,7 @@ const Index = () => {
         </div>
       </main>
 
-      <footer className="py-4 px-6 border-t text-center text-sm text-muted-foreground">
+      <footer className="py-4 px-6 border-t text-center text-sm text-muted-foreground mt-10">
         <p>ResearchX AI • Professional Document Generator</p>
       </footer>
     </div>
