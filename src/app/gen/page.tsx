@@ -4,7 +4,8 @@ import TopicForm from "@/components/TopicForm";
 import OutlineGenerator from "@/components/OutlineGenerator";
 import ContentGenerator from "@/components/ContentGenerator";
 import DocumentPreview from "@/components/DocumentPreview";
-import { AnimatePresence, motion } from "motion/react";
+import RotatingMessages from "@/components/rotatingmessages";
+import { AnimatePresence, motion } from "framer-motion";
 import {
   ClipboardList,
   Pencil,
@@ -23,6 +24,15 @@ const Index = () => {
   const [topicInfo, setTopicInfo] = useState<Topic | null>(null);
   const [documentOutline, setDocumentOutline] =
     useState<DocumentOutline | null>(null);
+
+  // Loading screen messages
+  const loadingMessages = [
+    "Crafting your perfect document...",
+    "Gathering research materials...",
+    "Organizing your content...",
+    "Applying academic formatting...",
+    "Almost ready to present your work...",
+  ];
 
   const handleTopicSubmit = async (topic: Topic) => {
     setTopicInfo(topic);
@@ -80,9 +90,15 @@ const Index = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground pt-16 md:pt-24">
-      {loading && (
-        <div className="fixed flex justify-center items-center inset-0 size-full z-50 bg-background/70 ">
-          <Loader className="size-28 ease-in text-primary animate-spin" />
+      {!loading && (
+        <div className="fixed flex flex-col justify-center items-center inset-0 size-full z-50 bg-background/80">
+          <Loader className="size-28 ease-in text-primary animate-spin mb-8" />
+          <div className="w-80 text-center">
+            <RotatingMessages
+              messages={loadingMessages}
+              className="text-primary/90 font-medium h-8"
+            />
+          </div>
         </div>
       )}
 
