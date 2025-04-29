@@ -22,7 +22,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Instrument_Serif } from "next/font/google";
 
-const instrumentserif = Instrument_Serif({
+export const instrumentserif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
 });

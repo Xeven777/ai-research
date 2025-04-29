@@ -18,21 +18,20 @@ import { DocumentOutline, Topic } from "@/lib/types";
 import { generateAIOutline } from "@/lib/actions/outline";
 import { toast } from "sonner";
 
+const loadingMessages = [
+  "Crafting your perfect document...",
+  "Gathering research materials...",
+  "Organizing your content...",
+  "Applying academic formatting...",
+  "Almost ready to present your work...",
+];
+
 const Index = () => {
   const [step, setStep] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [topicInfo, setTopicInfo] = useState<Topic | null>(null);
   const [documentOutline, setDocumentOutline] =
     useState<DocumentOutline | null>(null);
-
-  // Loading screen messages
-  const loadingMessages = [
-    "Crafting your perfect document...",
-    "Gathering research materials...",
-    "Organizing your content...",
-    "Applying academic formatting...",
-    "Almost ready to present your work...",
-  ];
 
   const handleTopicSubmit = async (topic: Topic) => {
     setTopicInfo(topic);

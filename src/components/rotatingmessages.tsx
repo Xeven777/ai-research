@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { instrumentserif } from "@/app/page";
 
 interface RotatingMessagesProps {
   messages: string[];
@@ -40,7 +42,7 @@ const RotatingMessages = ({
           exit="exit"
           variants={variants}
           transition={{ stiffness: 300, damping: 30 }}
-          className="text-center font-medium"
+          className={cn("text-center font-medium", instrumentserif.className)}
         >
           {messages[currentMessageIndex]}
         </motion.p>
